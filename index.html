@@ -143,6 +143,14 @@
         .gantt-table td {
             word-break: break-word;
         }
+        /* 序号列样式 */
+        .gantt-table th:first-child,
+        .gantt-table td:first-child {
+            width: 50px;
+            text-align: center;
+            font-weight: 600;
+        }
+
         .status-badge {
             display: inline-block;
             padding: 0.2rem 0.5rem;
@@ -178,6 +186,10 @@
             .gantt-table th, .gantt-table td {
                 padding: 0.5rem 0.3rem;
                 font-size: 0.7rem;
+            }
+            .gantt-table th:first-child,
+            .gantt-table td:first-child {
+                width: 40px;
             }
         }
     </style>
@@ -223,7 +235,7 @@
                         <tr><td>Marry Zhang</td><td>Buyer</td><td>marry.zhang@company.com</td> </tr>
                         <tr><td>Miko Shen</td><td>Case Manager</td><td>miko.shen@company.com</td> </tr>
                     </tbody>
-                 </table>
+                </table>
             </div>
         </div>
 
@@ -238,6 +250,7 @@
                     <table class="gantt-table" id="gantt-table">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>项目事项</th>
                                 <th>联系人</th>
                                 <th>开始时间</th>
@@ -245,7 +258,7 @@
                                 <th>项目进度状态</th>
                                 <th>依赖项</th>
                                 <th>备注</th>
-                             </tr>
+                            </tr>
                         </thead>
                         <tbody id="gantt-table-body"></tbody>
                     </table>
@@ -372,7 +385,8 @@
         const tbody = document.getElementById('gantt-table-body');
         if (!tbody) return;
         let rows = '';
-        for (let task of uniqueTasks) {
+        for (let i = 0; i < uniqueTasks.length; i++) {
+            const task = uniqueTasks[i];
             let statusClass = "", statusText = "";
             if (task.status === "Done") { statusClass = "status-done"; statusText = "已完成"; }
             else if (task.status === "In Progress") { statusClass = "status-progress"; statusText = "进行中"; }
@@ -381,6 +395,7 @@
             const endDate = formatChineseDate(task.end);
             rows += `
                 <tr>
+                    <td>${i + 1}</td>
                     <td>${task.name}</td>
                     <td>${task.owner || "—"}</td>
                     <td>${startDate}</td>
